@@ -18,7 +18,7 @@ export const SignUpPage = () => {
             const response = await axios.post('/api/signup',{email:emailValue, password: passwordValue});
             const {token} = response.data;
             setToken(token);
-            history.push('/verify-email');
+            history.push('/please-verify');
             
         }catch(err) {
             setErrorMessage(err.message);

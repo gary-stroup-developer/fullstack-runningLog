@@ -17,7 +17,7 @@ export const LoginPage = () => {
             const response = await axios.post('/api/login', {email:emailValue, password: passwordValue});
             const {token} = response.data;
             setToken(token);
-            history.push('/');
+            history.push('/home');
         } catch(err) {
             setErrorMessage(err.message);
         }
