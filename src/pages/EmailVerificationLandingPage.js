@@ -29,6 +29,6 @@ export const EmailVerificationLandingPage = () => {
     },[setToken, verificationString]);
     
     if(isLoading) return <p>Loading....</p>
-    if(!isSuccess) return <EmailVerificationFail email={email} verificationString={verificationString} />
+    // if(!isSuccess) return <EmailVerificationFail email={email} verificationString={verificationString} />
     return <EmailVerificationSuccess />
 }
