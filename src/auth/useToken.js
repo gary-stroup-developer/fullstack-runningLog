@@ -2,7 +2,7 @@ import { useState } from "react";
 
 export const useToken = ()=> {
     const [token, setInternalToken] = useState(()=>{
-        localStorage.getItem('token');
+        return localStorage.getItem('token');
     });
 
     const setToken = newToken => {

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useParams } from 'react-router';
 import axios from 'axios';
 import { ResetPasswordFail } from './ResetPasswordFail';
 import { ResetPasswordSuccess } from './ResetPasswordSuccess';
@@ -7,13 +8,16 @@ export const ResetPasswordLandingPage = () => {
     //set up state
     const [passwordValue, setPasswordValue] = useState('');
     const [confirmPasswordValue, setConfirmPasswordValue] = useState('');
-    const [isSuccess, setIsSuccess] = useState(false);
+    const [isSuccess, setIsSuccess] = useState('');
     const [showForm, setShowForm] = useState(true);
+
+    //get the verification string
+    const verificationString = useParams();
     
     const resetPassword = async () => {
         try {
-            const response = await axios.put('/api/reset-password',{password: passwordValue});
-            const message = response.data;
+            const response = await axios.put('/api/reset-password',{password: passwordValue,verificationString});
+            const {message} = response.data;
 
             setIsSuccess(message);
             setShowForm(false);

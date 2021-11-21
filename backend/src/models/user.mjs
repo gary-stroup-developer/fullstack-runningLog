@@ -3,7 +3,7 @@ import validator from 'validator';
 import bcrypt from 'bcrypt';
 import 'dotenv';
 import jwt from 'jsonwebtoken';
-import { User } from "../db.mjs";
+
 
 
 
@@ -38,7 +38,9 @@ import { User } from "../db.mjs";
             token: 'String'
         }],
         isVerified: {type: Boolean},
-        verificationString: 'String'
+        verificationString: {
+            type: String
+        }
     });
 
     //create a token for the user

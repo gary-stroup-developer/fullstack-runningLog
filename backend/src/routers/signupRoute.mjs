@@ -3,20 +3,21 @@ import { sendEmail } from "../../utils/sendEmail.mjs";
 import { v4 as uuid} from 'uuid';
 import 'dotenv';
 
+
 export const signupRoute = {
     path:'/api/signup',
     method: 'post',
     handler: async (req,res) => {
         const {userName,firstName, lastName, password} = req.body;
 
-        const verificationString = uuid();
+        const verificationString = uuid().toString();
 
         //check if a user already exists...they should not
         const doesUserExist = await User.findOne({userName})
         if(doesUserExist) return res.status(400).json({"message":"a user with that email is already registered"});
 
         //create the user inside the database and register them a token
-        // const user = await User.create({firstName, lastName, userName, password, isVerified: false, verificationString});
+        
         const user = await User.create({firstName, lastName, userName, password, isVerified: false, verificationString});
         try {
            await user.save();

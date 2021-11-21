@@ -1,4 +1,5 @@
 import { User } from "../db.mjs";
+import { ObjectId } from "mongodb";
 import jwt from 'jsonwebtoken';
 import 'dotenv';
 
@@ -9,28 +10,30 @@ export const emailVerificationRoute =  {
 
         //get the verification string and check the db for the user with that string
         const {verificationString} = req.body;
-        try{
-        const user = await User.findOneAndUpdate({verificationString:verificationString},{
-            verificationString: '',
-            isVerified: true
-        },{new:true},(err,doc) => {
-            if(err) {
-                res.status(400).json({"message":err.message});
-            }
-            return doc;
-        });
-        //destructure the user and create the data for the token
-        const {userName, firstName, isVerified} = user;
-        const tokenData = {userName, firstName, isVerified};
-        jwt.sign(tokenData,process.env.JWT_SECRET,{expiresIn: '2d'},(err, token)=>{
-            if(err){
-                return res.status(500).json({"message":err.message,"userName":userName});
-            }
-            res.status(200).json({"token":token,"userName":userName});
-        })
+        const result = await User.findOne({verificationString});
+        if(!result) return res.status(401).json({message: 'The email verification code is incorrect'});
+
+        const {_id: id, userName, firstName } = result;
+        
+       
+            const user = await User.findOneAndUpdate({verificationString},{
+                verificationString: '',
+                isVerified: true
+            },{new:true});
             
-    } catch(err){
-        res.status(400).json({"message":err.message});
-    }
+            
+            //destructure the user and create the data for the token
+      
+                const tokenData = {userName, id, firstName, isVerified: true};
+                jwt.sign(tokenData,process.env.JWT_SECRET,{expiresIn: '2d'},(err, token)=>{
+                    if(err) {
+                    return res.sendStatus(500);
+                    }
+                    else{
+                        res.status(200).json({token});
+                    }
+                    
+                })
+          
     }
 }
