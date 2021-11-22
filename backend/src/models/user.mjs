@@ -47,7 +47,7 @@ import jwt from 'jsonwebtoken';
     userSchema.methods.createToken = async function() {
         const user = this;
 
-        jwt.sign({id:user._id,userName:user.userName, name: user.firstName},process.env.JWT_SECRET,{expiresIn:'2d'},(err,token) => {
+        jwt.sign({id:user._id,userName:user.userName, name: user.firstName, isVerified: user.isVerified},process.env.JWT_SECRET,{expiresIn:'2d'},(err,token) => {
             if(err){
                 return;
             }
@@ -55,6 +55,12 @@ import jwt from 'jsonwebtoken';
             user.tokens = user.tokens.concat({token});
             
         });
+        await user.save();
+    }
+
+    userSchema.methods.setToken = async function (token) {
+        const user = this;
+        user.tokens = user.tokens.concat({token});
         await user.save();
     }
 

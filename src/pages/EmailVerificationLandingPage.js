@@ -19,11 +19,11 @@ export const EmailVerificationLandingPage = () => {
             try {
                 const response = await axios.put('/api/verify-email',{verificationString});
                 const {token} = response.data;
-                if(token){
+              
                 setToken(token);
                 setIsSuccess(true);
                 setIsLoading(false);
-                }
+                
             }catch(err) {
                 setIsSuccess(false);
                 setIsLoading(false);

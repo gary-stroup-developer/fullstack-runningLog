@@ -10,30 +10,32 @@ export const emailVerificationRoute =  {
 
         //get the verification string and check the db for the user with that string
         const {verificationString} = req.body;
-        const result = await User.findOne({verificationString});
-        if(!result) return res.status(401).json({message: 'The email verification code is incorrect'});
 
-        const {_id: id, userName, firstName } = result;
+        const user = await User.findOneAndUpdate({verificationString},{
+            verificationString: '',
+            isVerified: true
+        },{new:true})
+
         
-       
-            const user = await User.findOneAndUpdate({verificationString},{
-                verificationString: '',
-                isVerified: true
-            },{new:true});
-            
-            
-            //destructure the user and create the data for the token
-      
-                const tokenData = {userName, id, firstName, isVerified: true};
-                jwt.sign(tokenData,process.env.JWT_SECRET,{expiresIn: '2d'},(err, token)=>{
-                    if(err) {
-                    return res.sendStatus(500);
+        //if user was found, create the data for the token and send back to the frontend
+        if(user) {
+            try {
+                const tokenData = {userName:user.userName, id:user._id, firstName: user.firstName, isVerified: true};
+                jwt.sign(tokenData, process.env.JWT_SECRET, { expiresIn: '2d' }, (err, token) => {
+                    if (err) {
+                        return res.sendStatus(500);
                     }
-                    else{
-                        res.status(200).json({token});
+                    else {
+                        user.setToken(token);
+                        return res.status(200).send({ token });
                     }
-                    
+        
                 })
+            }catch(err){
+                res.status(500).json({err});
+            }
+        }
+       
           
     }
 }
