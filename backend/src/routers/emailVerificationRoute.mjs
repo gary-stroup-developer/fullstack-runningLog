@@ -1,5 +1,4 @@
 import { User } from "../db.mjs";
-import { ObjectId } from "mongodb";
 import jwt from 'jsonwebtoken';
 import 'dotenv';
 

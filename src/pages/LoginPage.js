@@ -14,7 +14,7 @@ export const LoginPage = () => {
 
     const loginClicked = async () => {
         try {
-            const response = await axios.post('/api/login', {email:emailValue, password: passwordValue});
+            const response = await axios.post('/api/login', {userName:emailValue, password: passwordValue});
             const {token} = response.data;
             setToken(token);
             history.push('/home');
@@ -27,8 +27,10 @@ export const LoginPage = () => {
         <div>
             <h1>Login</h1>
             <p>{errorMessage}</p>
-            <input type="email" value={emailValue} onChange={(e)=>setEmailValue(e.target.value)} placeholder="someone@gmail.com" />
-            <input type="password" value={passwordValue} onChange={(e) => setPasswordValue(e.target.value)} placeholder="password" />
+            <label htmlFor="email">username</label>
+            <input id="email" type="email" value={emailValue} onChange={(e)=>setEmailValue(e.target.value)} placeholder="someone@gmail.com" />
+            <label htmlFor = "password">Password</label>
+            <input id="password" type="password" value={passwordValue} onChange={(e) => setPasswordValue(e.target.value)} placeholder="password" />
             <button onClick={loginClicked}>Log in</button>
             <hr />
             <button onClick={()=>history.push('/forgot-password')}>Forgot Password?</button>

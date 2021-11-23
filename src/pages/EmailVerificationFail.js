@@ -3,12 +3,12 @@ import { useHistory } from "react-router";
 import { useState } from "react";
 
 export const EmailVerificationFail = (props) => {
-    const {userName, verificationString} = props;
+    const {verificationString} = props;
     const history = useHistory();
     const [eMessage, setMessage] = useState('');
 
     const resendEmail = async () => {
-        const response = await axios.post('/api/resendEmail',{userName,verificationString});
+        const response = await axios.post('/api/resendEmail',{verificationString});
         const {message} = response.data;
 
         setMessage(message);
