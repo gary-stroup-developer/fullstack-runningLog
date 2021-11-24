@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useParams } from 'react-router';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { ResetPasswordFail } from './ResetPasswordFail';
 import { ResetPasswordSuccess } from './ResetPasswordSuccess';
@@ -8,18 +8,19 @@ export const ResetPasswordLandingPage = () => {
     //set up state
     const [passwordValue, setPasswordValue] = useState('');
     const [confirmPasswordValue, setConfirmPasswordValue] = useState('');
-    const [isSuccess, setIsSuccess] = useState('');
+    const [isSuccess, setIsSuccess] = useState(false);
     const [showForm, setShowForm] = useState(true);
+    const [response, setResponse] = useState('');
 
     //get the verification string
-    const verificationString = useParams();
+    const {verificationString} = useParams();
     
     const resetPassword = async () => {
         try {
             const response = await axios.put('/api/reset-password',{password: passwordValue,verificationString});
-            const {message} = response.data;
+            setResponse(response.data.message);
 
-            setIsSuccess(message);
+            setIsSuccess(true);
             setShowForm(false);
         }catch(err) {
             setIsSuccess(false);
@@ -27,9 +28,8 @@ export const ResetPasswordLandingPage = () => {
         }
     }
 
+if(showForm){
     return (
-        <div>
-        {showForm ? 
         <div>
             <h2>Please enter in your new password below</h2>
             <input 
@@ -41,15 +41,22 @@ export const ResetPasswordLandingPage = () => {
                 type='password'
                 value={confirmPasswordValue}
                 placeholder='confirm password'
-                onChange = { () => setConfirmPasswordValue(confirmPasswordValue) }
+                onChange = { (e) => setConfirmPasswordValue(e.target.value) }
             />
             <button disabled={passwordValue !== confirmPasswordValue} onClick={resetPassword}>Reset Password</button>
         </div>
-        : null
-            
-        }
-            {isSuccess ? <ResetPasswordSuccess />:<ResetPasswordFail />}
-         
-        </div>
     )
+}
+
+    if(!isSuccess) {
+        return <div>
+            <ResetPasswordFail />
+            {response}
+        </div>
+    }
+
+    return <div>
+        <ResetPasswordSuccess />
+        {response}
+    </div>
 }

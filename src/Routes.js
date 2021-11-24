@@ -20,7 +20,7 @@ export const Routes = () => {
                 <Route exact path = '/signup' render={(routeProps) =><SignUpPage />} />
                 <Route exact path = '/please-verify' render={(routeProps) =><PleaseVerifyEmailPage />} />
                 <Route exact path = '/verify-email/:verificationString' render={(routeProps) => <EmailVerificationLandingPage />} />
-                <Route exact path = '/forgot-password' render={(routeProps) => <ForgotPasswordPage />} />
+                <Route exact path = '/forgot-password/' render={(routeProps) => <ForgotPasswordPage />} />
                 <Route exact path = '/reset-password/:verificationString' render={(routeProps) => <ResetPasswordLandingPage />} />
             </Switch>
         </Router>

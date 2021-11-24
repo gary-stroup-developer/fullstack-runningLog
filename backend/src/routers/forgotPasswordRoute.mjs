@@ -8,7 +8,7 @@ export const forgotPasswordRoute = {
     method: 'post',
     handler: async (req,res) => {
         const {userName} = req.body;
-        const verificationString = uuid().toString();
+        const verificationString = uuid();
 
         //update the user info to hold new verification string
         const user = await User.findOneAndUpdate({userName},{verificationString: verificationString});
@@ -23,10 +23,10 @@ export const forgotPasswordRoute = {
                 `
             });
 
-            return res.status(200).json({"message":true});
+            return res.status(200).json({"message":"Reset link was successful. Check your email to complete the reset password process "});
 
         }catch(err){
-            return res.status(400).json({"message":false});
+            return res.status(400).json({"message":"Something went wrong. Try to reset password again"});
         }
     }
 }
