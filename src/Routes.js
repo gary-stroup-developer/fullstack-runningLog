@@ -9,6 +9,9 @@ import { PleaseVerifyEmailPage } from './pages/PleaseVerifyEmailPage';
 import { EmailVerificationLandingPage } from "./pages/EmailVerificationLandingPage";
 import { ForgotPasswordPage } from "./pages/ForgotPasswordPage";
 import { ResetPasswordLandingPage } from "./pages/ResetPasswordLandingPage";
+import { Logbook } from "./components/Logbook";
+import { TrainingGuide } from "./components/TrainingGuide";
+import { VisionBoard } from "./components/VisionBoard";
 
 export const Routes = () => {
     return (
@@ -19,9 +22,12 @@ export const Routes = () => {
                 <Route exact path = '/login' render={(routeProps) =><LoginPage />} />
                 <Route exact path = '/signup' render={(routeProps) =><SignUpPage />} />
                 <Route exact path = '/please-verify' render={(routeProps) =><PleaseVerifyEmailPage />} />
-                <Route exact path = '/verify-email/:verificationString' render={(routeProps) => <EmailVerificationLandingPage />} />
+                <Route path = '/verify-email/:verificationString' render={(routeProps) => <EmailVerificationLandingPage />} />
                 <Route exact path = '/forgot-password/' render={(routeProps) => <ForgotPasswordPage />} />
                 <Route exact path = '/reset-password/:verificationString' render={(routeProps) => <ResetPasswordLandingPage />} />
+                <Route exact path = '/logbook' render ={() => <Logbook />} />
+                <Route exact path = '/training-guide' render = {() => <TrainingGuide />} />
+                <Route exact path = '/vision-board' render = {() => <VisionBoard />} />
             </Switch>
         </Router>
     )

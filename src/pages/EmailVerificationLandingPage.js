@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { EmailVerificationFail } from './EmailVerificationFail';
 import { EmailVerificationSuccess } from './EmailVerificationSuccess';
 import { useToken } from '../auth/useToken';
+import { Preloader, Col} from 'react-materialize';
 
 
 export const EmailVerificationLandingPage = () => {
@@ -32,7 +33,13 @@ export const EmailVerificationLandingPage = () => {
         onLoading();
     },[setToken, verificationString])
     
-    if(isLoading) return <p>Loading....</p>;
+    if(isLoading) return  <Col s={4}>
+    <Preloader
+    active
+    color="blue"
+    flashing
+    />
+    </Col>;
     if(!isSuccess) return <EmailVerificationFail verificationString={verificationString} />;
     return <EmailVerificationSuccess />;
 }
