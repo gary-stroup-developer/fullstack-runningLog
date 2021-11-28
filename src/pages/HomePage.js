@@ -27,7 +27,7 @@ export const HomePage = () => {
         }
         
         getQuote();
-    }, [setDailyQuote])
+    }, [])
     
     return (
         <div>

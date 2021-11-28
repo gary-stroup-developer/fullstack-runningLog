@@ -44,19 +44,20 @@ import jwt from 'jsonwebtoken';
     });
 
     //create a token for the user
-    userSchema.methods.createToken = async function() {
-        const user = this;
+    // userSchema.methods.createToken = async function() {
+    //     const user = this;
 
-        jwt.sign({id:user._id,userName:user.userName, name: user.firstName, isVerified: user.isVerified},process.env.JWT_SECRET,{expiresIn:'2d'},(err,token) => {
-            if(err){
-                return;
-            }
-             //append the token to the user
-            user.tokens = user.tokens.concat({token});
+    //     jwt.sign({id:user._id,userName:user.userName, name: user.firstName, isVerified: user.isVerified},process.env.JWT_SECRET,{expiresIn:'2d'},(err,token) => {
+    //         if(err){
+    //             return;
+    //         }
+    //          //append the token to the user
+    //         user.tokens = user.tokens.concat({token});
             
-        });
-        await user.save();
-    }
+    //     });
+    //     await user.save();
+    // }
+
 
     userSchema.methods.setToken = async function (token) {
         const user = this;
@@ -66,15 +67,15 @@ import jwt from 'jsonwebtoken';
 
 
     //before saving the user, hash the password
-    userSchema.pre('save',async function(next){
-        const user = this;
+    // userSchema.pre('save',async function(next){
+    //     const user = this;
 
-        if (user.isModified('password')) {
+    //     if (user.isModified('password')) {
 
-            user.password = await bcrypt.hash(user.password,10);
-        }
+    //         user.password = await bcrypt.hash(user.password,10);
+    //     }
 
-        next()
-    });
+    //     next()
+    // });
 
    

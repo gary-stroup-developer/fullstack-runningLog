@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useHistory } from 'react-router';
 import { useToken } from '../auth/useToken';
+import { Button} from 'react-materialize';
 
 export const SignUpPage = () => {
     const [firstName, setFirstName] = useState('');
@@ -27,7 +28,8 @@ export const SignUpPage = () => {
         }
     };
     return (
-        <div>
+        <div className="row">
+        <div className="col s12 m6 offset-m3">
             <h1>Sign Up</h1>
             {errorMessage && <div>{errorMessage}</div>}
             <input type="text" placeholder="first name" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
@@ -35,9 +37,10 @@ export const SignUpPage = () => {
             <input type="email" placeholder="someone@gmail.com" value={emailValue} onChange={(e) => setEmailValue(e.target.value)} />
             <input type="password" placeholder="password" value={passwordValue} onChange={(e) => setPasswordValue(e.target.value)} />
             <input type="password" placeholder="confirm password" value={confirmPasswordValue} onChange={(e) => setConfirmPasswordValue(e.target.value)} />
-            <button disabled={!emailValue || !passwordValue || passwordValue !== confirmPasswordValue} onClick={signupClicked}>
+            <Button className="orange" disabled={!emailValue || !passwordValue || passwordValue !== confirmPasswordValue} onClick={signupClicked}>
                 Sign Up
-            </button>
+            </Button>
+        </div>
         </div>
     )
 }

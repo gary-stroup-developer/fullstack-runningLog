@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useHistory } from 'react-router';
 import { useToken } from '../auth/useToken';
+import { Button, Icon } from 'react-materialize';
 
 export const LoginPage = () => {
     const [,setToken] = useToken();
@@ -24,18 +25,20 @@ export const LoginPage = () => {
     };
 
     return (
-        <div>
-            <h1>Login</h1>
-            <p>{errorMessage}</p>
-            <label htmlFor="email">username</label>
-            <input id="email" type="email" value={emailValue} onChange={(e)=>setEmailValue(e.target.value)} placeholder="someone@gmail.com" />
-            <label htmlFor = "password">Password</label>
-            <input id="password" type="password" value={passwordValue} onChange={(e) => setPasswordValue(e.target.value)} placeholder="password" />
-            <button onClick={loginClicked}>Log in</button>
-            <hr />
-            <button onClick={()=>history.push('/forgot-password')}>Forgot Password?</button>
-            <p>don't have an account? sign up to get access</p>
-            <button onClick={()=>history.push('/signup')}>Sign up</button>
+        <div className="row">
+            <div className="col s12 m6 offset-m3">
+                <h1>Login</h1>
+                <p>{errorMessage}</p>
+                <label htmlFor="email">Username</label>
+                <input id="email" type="email" value={emailValue} onChange={(e)=>setEmailValue(e.target.value)} placeholder="someone@gmail.com" />
+                <label htmlFor = "password">Password</label>
+                <input id="password" type="password" value={passwordValue} onChange={(e) => setPasswordValue(e.target.value)} placeholder="password" />
+                <Button style={{marginRight:"15px"}} className="orange" disabled={emailValue && passwordValue ? false : true} node="button" type="submit" waves="light" onClick={loginClicked}>Log in<Icon right>send</Icon></Button>
+                <Button className="orange" node="button" waves="light" onClick={()=>history.push('/forgot-password')}>Forgot Password?</Button>
+                <div style={{height:"20px"}} />
+                <p>Don't have an account? sign up to get access</p>
+                <Button className="orange" node="button" onClick={()=>history.push('/signup')}>Sign up</Button>
+            </div>
         </div>
     )
 }

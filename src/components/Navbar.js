@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useHistory } from 'react-router';
 import { Navbar, Icon, NavItem,Dropdown, Divider } from "react-materialize";
+import circle from '../images/circle.png';
 
 export const NavbarComponent = (props) => {
     const history = useHistory();
@@ -17,8 +18,9 @@ export const NavbarComponent = (props) => {
     return (
         <div>
             <Navbar
+                className="orange"
                 alignLinks="right"
-                brand={<a className="brand-logo" href="/home">Running Log</a>}
+                brand={<a className="brand-logo" href="/home" style={{paddingLeft:"10px"}}><div style={{display:"flex",width:"400px",alignItems:"center"}}> <img style={{width:"10%"}} src={circle}/> Running Log</div></a>}
                 id="mobile-nav"
                 menuIcon={<Icon>menu</Icon>}
                 options={{
@@ -62,7 +64,7 @@ export const NavbarComponent = (props) => {
                         onOpenStart: null,
                         outDuration: 250
                     }}
-                    trigger={<Icon medium>person</Icon>}
+                    trigger={<Icon style={{padding:"0 20px"}} small>person</Icon>}
                     >
                     <div style={{display: "flex", width: "300px",padding:"10px"}}>
                     <p>Name</p>
@@ -74,7 +76,7 @@ export const NavbarComponent = (props) => {
                     <p style={{marginLeft: "25px"}}>{props.username}</p>
                     </div>
                     <Divider />
-                    <div onClick={LogoutUser}>
+                    <div style={{display: "flex", width: "300px",padding:"10px"}} onClick={LogoutUser}>
                         Logout
                     </div>
                 </Dropdown>

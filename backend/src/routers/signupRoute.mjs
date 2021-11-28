@@ -3,6 +3,7 @@ import { sendEmail } from "../../utils/sendEmail.mjs";
 import { v4 as uuid} from 'uuid';
 import 'dotenv';
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 
 
 export const signupRoute = {
@@ -18,8 +19,18 @@ export const signupRoute = {
         if(doesUserExist) return res.status(400).json({"message":"a user with that email is already registered"});
 
         //create the user inside the database and register them a token
-        const user = await User.create({firstName, lastName, userName, password, isVerified: false, verificationString});
-        if(user) {
+        bcrypt.hash(password,10).then((hash) => {
+            User.create({firstName, lastName, userName, password:hash, isVerified: false, verificationString}).then((user) => {
+                jwt.sign({userName, firstName, isVerified:false, id:user._id},process.env.JWT_SECRET,{expiresIn: '2d'}, (err, token) => {
+                    if(err) {
+                        return res.status(400).json({"message":"Something went wrong. Please try signing up again"});
+                    }
+                    user.setToken(token);
+                    return res.status(200).json({token});
+                });
+            })
+        });
+
             try {
                 //send verification email to user
                 sendEmail({
@@ -31,20 +42,9 @@ export const signupRoute = {
                     http://localhost:3000/verify-email/${verificationString}
                     `
                 });
-
-            jwt.sign({userName, firstName, isVerified:false, id:user._id},process.env.JWT_SECRET,{expiresIn: '2d'}, (err, token) => {
-                if(err) {
-                    return res.status(400).json({"message":"Something went wrong. Please try signing up again"});
-                }
-                user.setToken(token);
-                return res.status(200).json({token});
-            });
-            //user.createToken();
-
             }catch(err) {
                 return res.status(500).json({"message":"Something went wrong. Please try signing up again"});
             }
-        }
         
     }
 }
