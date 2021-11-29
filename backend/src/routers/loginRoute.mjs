@@ -1,5 +1,4 @@
 import { User } from "../db.mjs";
-import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import 'dotenv';
 
@@ -11,12 +10,10 @@ export const loginRoute = {
         const {userName, password} = req.body;
 
         //check if the user exists in the db
-        const user = await User.findOne({userName});
-        const match = await bcrypt.compare(password, user.password);
-
-        if(match) {
-            return res.sendStatus(500);
-        }
+        
+        try {
+        const user = await User.login(userName,password);
+        // const match = await bcrypt.compare(password, user.password);
         const {firstName, isVerified,_id:id} = user;
         jwt.sign({userName, firstName, isVerified, id},process.env.JWT_SECRET,{expiresIn: '2d'},(err, token) => {
             if(err) {
@@ -25,6 +22,9 @@ export const loginRoute = {
             user.setToken(token);
             return res.status(200).json({token});    
         }); 
+    }catch(err){
+        return res.status(400).json({"message":"unable to verify user"});
+    }
   
     }
 }

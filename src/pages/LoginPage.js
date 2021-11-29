@@ -1,8 +1,9 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
 import { useToken } from '../auth/useToken';
 import { Button, Icon } from 'react-materialize';
+
 
 export const LoginPage = () => {
     const [,setToken] = useToken();
@@ -12,6 +13,7 @@ export const LoginPage = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [emailValue, setEmailValue] = useState("");
     const [passwordValue, setPasswordValue] = useState('');
+
 
     const loginClicked = async () => {
         try {
@@ -34,10 +36,11 @@ export const LoginPage = () => {
                 <label htmlFor = "password">Password</label>
                 <input id="password" type="password" value={passwordValue} onChange={(e) => setPasswordValue(e.target.value)} placeholder="password" />
                 <Button style={{marginRight:"15px"}} className="orange" disabled={emailValue && passwordValue ? false : true} node="button" type="submit" waves="light" onClick={loginClicked}>Log in<Icon right>send</Icon></Button>
-                <Button className="orange" node="button" waves="light" onClick={()=>history.push('/forgot-password')}>Forgot Password?</Button>
+                <Button className="orange" waves="light" onClick={()=>history.push('/forgot-password')}>Forgot Password?</Button>
+              
                 <div style={{height:"20px"}} />
                 <p>Don't have an account? sign up to get access</p>
-                <Button className="orange" node="button" onClick={()=>history.push('/signup')}>Sign up</Button>
+                <Button className="orange" onClick={()=>history.push('/signup')}>Sign up</Button>
             </div>
         </div>
     )
