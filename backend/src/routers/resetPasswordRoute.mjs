@@ -1,4 +1,5 @@
-import { User } from "../db.mjs";
+//import { User } from "../db.mjs";
+import { getDbConnection } from '../db.mjs';
 import bcrypt from 'bcrypt';
 
 
@@ -8,13 +9,14 @@ export const resetPasswordRoute = {
     handler: async (req,res) => {
         //get the new password and verificationString
         const {password, verificationString} = req.body;
-        const salt = bcrypt.genSaltSync(10);
-        const hash = bcrypt.hashSync(password,salt);
+        
+        const hash = await bcrypt.hash(password,10);
     
-        const user = await User.findOneAndUpdate({verificationString}, {
-            password: hash,
+        const db = getDbConnection('running-log');
+        const user = await db.collection('users').updateOne({verificationString},{$set: {
+            passwordHash: hash,
             verificationString: '',
-        }, {new: true});
+        }});
 
         if(!user){
             return res.status(400).send('unable to reset');

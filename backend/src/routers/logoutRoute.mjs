@@ -1,4 +1,4 @@
-import { User } from "../db.mjs";
+import { getDbConnection } from "../db.mjs";
 import jwt from 'jsonwebtoken';
 import 'dotenv';
 export const logoutRoute = {
@@ -6,8 +6,10 @@ export const logoutRoute = {
     method: 'put',
     handler: async (req,res) => {
         const {userName} = req.body;
-
-        const user = await User.findOneAndUpdate({userName},{tokens:[]});
+        const db = getDbConnection('running-log');
+        const user = await db.collection('users').findOneAndUpdate({userName},{
+            $set:{tokens:[]}
+        });
         
         if(user) {
             try {

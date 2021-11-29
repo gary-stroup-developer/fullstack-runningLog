@@ -8,7 +8,7 @@ export const NavbarComponent = (props) => {
     const history = useHistory();
 
     const LogoutUser = () => {
-        const response = axios.put('/api/logout',{userName:props.username});
+        // const response = axios.put('/api/logout',{userName:props.username});
         
     
         // We'll want to log the user out here

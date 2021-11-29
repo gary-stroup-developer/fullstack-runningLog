@@ -22,7 +22,7 @@ export const Routes = () => {
                 <Route exact path = '/login' render={(routeProps) =><LoginPage />} />
                 <Route exact path = '/signup' render={(routeProps) =><SignUpPage />} />
                 <Route exact path = '/please-verify' render={(routeProps) =><PleaseVerifyEmailPage />} />
-                <Route path = '/verify-email/:verificationString' render={(routeProps) => <EmailVerificationLandingPage />} />
+                <Route exact path = '/verify-email/:verificationString' render={(routeProps) => <EmailVerificationLandingPage />} />
                 <Route exact path = '/forgot-password/' render={(routeProps) => <ForgotPasswordPage />} />
                 <Route exact path = '/reset-password/:verificationString' render={(routeProps) => <ResetPasswordLandingPage />} />
                 <Route exact path = '/logbook' render ={() => <Logbook />} />

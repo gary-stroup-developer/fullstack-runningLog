@@ -1,4 +1,4 @@
-import { User } from "../db.mjs";
+import { getDbConnection } from "../db.mjs";
 import jwt from 'jsonwebtoken';
 import 'dotenv';
 
@@ -9,11 +9,11 @@ export const emailVerificationRoute =  {
 
         //get the verification string and check the db for the user with that string
         const {verificationString} = req.body;
-
-        const user = await User.findOneAndUpdate({verificationString},{
-            verificationString: '',
-            isVerified: true
-        },{new:true})
+        const db = getDbConnection('running-log');
+        const user = await db.collection('users').findOneAndUpdate({verificationString},
+            {
+                $set:{verificationString: '',isVerified: true,}
+            },{returnOriginal: false});
 
         
         //if user was found, create the data for the token and send back to the frontend
@@ -22,19 +22,15 @@ export const emailVerificationRoute =  {
                 const tokenData = {userName:user.userName, id:user._id, firstName: user.firstName, isVerified: true};
                 jwt.sign(tokenData, process.env.JWT_SECRET, { expiresIn: '2d' }, (err, token) => {
                     if (err) {
-                        return res.sendStatus(500);
+                        return res.status(500).json({"message":"email could not be verified. Please try again"});
                     }
                     else {
-                        user.setToken(token);
                         return res.status(200).send({ token });
                     }
-        
-                })
+                });
             }catch(err){
-                res.status(500).json({err});
+                res.status(500).json({"message":err.message});
             }
-        }
-       
-          
+        }  
     }
 }

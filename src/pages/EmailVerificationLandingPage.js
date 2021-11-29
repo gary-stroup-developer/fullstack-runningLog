@@ -34,11 +34,7 @@ export const EmailVerificationLandingPage = () => {
     },[setToken, verificationString])
     
     if(isLoading) return  <Col s={4}>
-    <Preloader
-    active
-    color="blue"
-    flashing
-    />
+    <Preloader active color="blue" flashing />
     </Col>;
     if(!isSuccess) return <EmailVerificationFail verificationString={verificationString} />;
     return <EmailVerificationSuccess />;

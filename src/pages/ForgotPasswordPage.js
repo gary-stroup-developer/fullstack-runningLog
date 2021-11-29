@@ -11,8 +11,8 @@ export const ForgotPasswordPage = () => {
     const history = useHistory();
     //create function resetPassword
     const sendEmailToResetPassword = async () => {
-        const response = await axios.post('/api/forgot-password',{userName:emailValue});
-        setMessage(response.data.message);
+        const response = await axios.put('/api/forgot-password',{userName:emailValue});
+        setMessage(response.data);
         setIsSuccess(true);
         setTimeout(()=> {
             history.push('/login');

@@ -4,6 +4,7 @@ import { useUser } from '../auth/useUser';
 import { NavbarComponent } from '../components/Navbar';
 import { Table, Row, Col,Collection, CollectionItem} from 'react-materialize';
 import { MotivationImage } from '../components/MotivationImage';
+import './HomePage.css';
 
 
 
@@ -12,7 +13,7 @@ export const HomePage = () => {
     const [dailyAuthor, setDailyAuthor] = useState('');
 
     const user = useUser();
-    const {userName, firstName, isVerified, id} = user;
+    const {userName, isVerified, id,firstName,picture} = user;
 
     useEffect(() => {
         
@@ -34,9 +35,12 @@ export const HomePage = () => {
         {isVerified? 
         (
             <div>
-            <NavbarComponent name={firstName} username={userName} />
+            <NavbarComponent  name={firstName} username={userName} />
             <div style={{padding:"25px"}}>
                 <h1>Welcome {firstName}</h1>
+                <div>
+                    <img className="HomePage-img" src={picture} /> 
+                </div>
                 <div style={{width: "80%",display:"flex",padding:"10px", justifyContent: "space-between"}}>
                     <p>Total Miles: 750</p>
                     <p>Weekly Miles: 55</p>

@@ -1,69 +1,72 @@
-import mongoose from 'mongoose';
-import validator from 'validator';
-import bcrypt from 'bcrypt';
-import 'dotenv';
-import jwt from 'jsonwebtoken';
+// import mongoose from 'mongoose';
+// import validator from 'validator';
+// import bcrypt from 'bcrypt';
+// import 'dotenv';
+// import jwt from 'jsonwebtoken';
 
 
 
 
-  export const userSchema = new mongoose.Schema( {
-        firstName: 'String',
-        lastName: 'String',
-        userName: {
-            type: String,
-            required: true,
-            lowercase: true,
-            unique: true,
-            trim: true,
-            validate: (value) => {
-                if(!validator.isEmail(value)) {
-                    throw new Error('username must be an email');
-                }
-            }
-        },
-        password: {
-            type: String,
-            required: true,
-            lowercase: true,
-            trim: true,
-            minlength: [8,'password must be at least 8 characters in length'],
-            validate: (value) => {
-                if(value.includes('password')){
-                    throw new Error('the password cannot contain the word password')
-                }
-            }
-        },
-        tokens:[{
-            token: 'String'
-        }],
-        isVerified: {type: Boolean},
-        verificationString: {
-            type: String
-        }
-    });
+//   export const userSchema = new mongoose.Schema( {
+//         firstName: 'String',
+//         lastName: 'String',
+//         userName: {
+//             type: String,
+//             lowercase: true,
+//             unique: true,
+//             trim: true,
+//             validate: (value) => {
+//                 if(!validator.isEmail(value)) {
+//                     throw new Error('username must be an email');
+//                 }
+//             }
+//         },
+//         password: {
+//             type: String,
+//             lowercase: true,
+//             trim: true,
+//             minlength: [8,'password must be at least 8 characters in length'],
+//             validate: (value) => {
+//                 if(value.includes('password')){
+//                     throw new Error('the password cannot contain the word password')
+//                 }
+//             }
+//         },
+//         tokens:[{
+//             token: 'String'
+//         }],
+//         isVerified: {type: Boolean},
+//         verificationString: {
+//             type: String
+//         }
+//     });
 
-    //create a token for the user
-    // userSchema.methods.createToken = async function() {
-    //     const user = this;
 
-    //     jwt.sign({id:user._id,userName:user.userName, name: user.firstName, isVerified: user.isVerified},process.env.JWT_SECRET,{expiresIn:'2d'},(err,token) => {
-    //         if(err){
-    //             return;
+//     userSchema.methods.setToken = async function (token) {
+//         const user = this;
+//         user.tokens = user.tokens.concat({token});
+//         await user.save();
+//     }
+
+    // userSchema.pre('save',async function(next){
+    //     if(this.isModified('password')){
+    //     const salt = await bcrypt.genSalt();
+    //     this.password = await bcrypt.hash(this.password,salt);
+    //     }
+    //     next();
+    // });
+    
+    // userSchema.statics.login = async function(email,password){
+    //     const user = await this.findOne({email});
+    //     if(user){
+    //         const auth = await bcrypt.compare(password,user.password);
+    //         if(!auth){
+    //             return user;
     //         }
-    //          //append the token to the user
-    //         user.tokens = user.tokens.concat({token});
-            
-    //     });
-    //     await user.save();
-    // }
-
-
-    userSchema.methods.setToken = async function (token) {
-        const user = this;
-        user.tokens = user.tokens.concat({token});
-        await user.save();
-    }
+    //         throw Error('incorrect password');
+    //     }
+    //     throw Error('incorrect email');
+    // };
 
 
     //before saving the user, hash the password
