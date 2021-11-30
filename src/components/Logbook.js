@@ -10,7 +10,7 @@ export const Logbook = () => {
         <div>
             <NavbarComponent />
                 <div className="row">
-                    <div className="col s12 m3" style={{height:"100vh", backgroundColor:"#fafafa",borderRight:"1px solid #D8D8D8"}}>
+                    <div className="col s12 m3" style={{height:"100%", backgroundColor:"#fafafa",borderRight:"1px solid #D8D8D8"}}>
                         <Button small className="orange"style={{margin:"20px auto"}}>Add Entry</Button>
                         <Divider/>
                         <div style={{marginTop:"25px"}} >

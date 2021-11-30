@@ -5,7 +5,7 @@ export const ResetPasswordFail = () => {
         <div>
             <h1>😩</h1>
             <p>Something went wrong. Try resetting your password. If problems persist contact us</p>
-            <button onClick={() => history.push('/forgot-password')}>Go to Login Page</button>
+            <button onClick={() => history.push('/forgot-password')}>Reset Password</button>
         </div>
     )
 }

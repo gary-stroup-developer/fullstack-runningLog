@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useHistory } from 'react-router';
 import { Navbar, Icon, NavItem,Dropdown, Divider } from "react-materialize";
 import circle from '../images/circle.png';
@@ -8,8 +7,6 @@ export const NavbarComponent = (props) => {
     const history = useHistory();
 
     const LogoutUser = () => {
-        // const response = axios.put('/api/logout',{userName:props.username});
-        
     
         // We'll want to log the user out here
         // and send them to the "login page"
