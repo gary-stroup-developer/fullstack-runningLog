@@ -1,0 +1,142 @@
+import React from "react"
+import { Table } from "react-materialize"
+
+export const PaceChart = () => {
+    return (
+        <div id="pace-chart">
+        <h3 style={{display:"inline-block",margin:"10px 25%"}}>Pace Chart</h3>
+        <Table hoverable={true}>
+            <thead>
+                <tr>
+                    <th>1 mi</th>
+                    <th>2 mi</th>
+                    <th>5k</th>
+                    <th>10k</th>
+                    <th>13.2 mi</th>
+                    <th>15 mi</th>
+                    <th>26.2 mi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>5:30</td>
+                    <td>11:00</td>
+                    <td>17:05</td>
+                    <td>34:11</td>
+                    <td>1:12:06</td>
+                    <td>1:22:30</td>
+                    <td>2:24:12</td>
+                </tr>
+                <tr>
+                    <td>5:45</td>
+                    <td>11:30</td>
+                    <td>17:52</td>
+                    <td>35:44</td>
+                    <td>1:15:23</td>
+                    <td>1:26:15</td>
+                    <td>2:30:46</td>
+                </tr>
+                <tr>
+                    <td>6:00</td>
+                    <td>12:00</td>
+                    <td>18:39</td>
+                    <td>37:17</td>
+                    <td>1:18:39</td>
+                    <td>1:30:00</td>
+                    <td>2:37:19</td>
+                </tr>
+                <tr>
+                    <td>6:30</td>
+                    <td>13:00</td>
+                    <td>20:12</td>
+                    <td>40:23</td>
+                    <td>1:25:13</td>
+                    <td>1:37:30</td>
+                    <td>2:50:25</td>
+                </tr>
+                <tr>
+                    <td>7:00</td>
+                    <td>14:00</td>
+                    <td>21:45</td>
+                    <td>43:30</td>
+                    <td>1:31:46</td>
+                    <td>1:45:00</td>
+                    <td>3:03:32</td>
+                </tr>
+                <tr>
+                    <td>7:30</td>
+                    <td>15:00</td>
+                    <td>23:18</td>
+                    <td>46:36</td>
+                    <td>1:38:19</td>
+                    <td>1:52:30</td>
+                    <td>3:16:39</td>
+                </tr>
+                <tr>
+                    <td>8:00</td>
+                    <td>16:00</td>
+                    <td>24:51</td>
+                    <td>49:43</td>
+                    <td>1:44:52</td>
+                    <td>2:00:00</td>
+                    <td>3:29:45</td>
+                </tr>
+                <tr>
+                    <td>8:30</td>
+                    <td>17:00</td>
+                    <td>26:25</td>
+                    <td>52:49</td>
+                    <td>1:51:26</td>
+                    <td>2:07:30</td>
+                    <td>3:42:52</td>
+                </tr>
+                <tr>
+                    <td>9:00</td>
+                    <td>18:00</td>
+                    <td>27:58</td>
+                    <td>55:56</td>
+                    <td>1:57:59</td>
+                    <td>2:15:00</td>
+                    <td>3:55:58</td>
+                </tr>
+                <tr>
+                    <td>9:30</td>
+                    <td>19:00</td>
+                    <td>29:31</td>
+                    <td>59:02</td>
+                    <td>2:04:32</td>
+                    <td>2:22:30</td>
+                    <td>4:09:05</td>
+                </tr>
+                <tr>
+                    <td>10:00</td>
+                    <td>20:00</td>
+                    <td>31:04</td>
+                    <td>1:02:08</td>
+                    <td>2:11:05</td>
+                    <td>2:30:00</td>
+                    <td>4:22:11</td>
+                </tr>
+                <tr>
+                    <td>10:30</td>
+                    <td>21:00</td>
+                    <td>32:37</td>
+                    <td>1:05:15</td>
+                    <td>2:17:39</td>
+                    <td>2:37:30</td>
+                    <td>4:35:18</td>
+                </tr>
+                <tr>
+                    <td>11:00</td>
+                    <td>22:00</td>
+                    <td>34:11</td>
+                    <td>1:08:21</td>
+                    <td>2:24:12</td>
+                    <td>2:45:00</td>
+                    <td>4:48:25</td>
+                </tr>
+            </tbody>
+        </Table>
+    </div>
+    )
+}
