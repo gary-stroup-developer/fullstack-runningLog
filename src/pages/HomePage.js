@@ -1,14 +1,14 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { useUser } from '../auth/useUser';
 import { NavbarComponent } from '../components/Navbar';
 import { Table, Row, Col,Collection, CollectionItem} from 'react-materialize';
 import { MotivationImage } from '../components/MotivationImage';
 import './HomePage.css';
+import { useUser } from '../auth/useUser';
 
 
 
-export const HomePage = () => {
+export const HomePage = (props) => {
     const [dailyQuote, setDailyQuote] = useState('');
     const [dailyAuthor, setDailyAuthor] = useState('');
 
@@ -32,10 +32,8 @@ export const HomePage = () => {
     
     return (
         <div>
-        {isVerified? 
-        (
             <div>
-            <NavbarComponent  name={firstName} username={userName} />
+            <NavbarComponent  name={firstName} username={userName} /> 
             <div style={{padding:"25px"}}>
                 <h1>Welcome {firstName}</h1>
                 <div>
@@ -91,10 +89,6 @@ export const HomePage = () => {
                 </Table>
                 </div>
             </div>
-        ):<div>
-            <p>Please check email to finish the verification process to access the app features</p>
-        </div>
-        }
         </div>
     )
 }

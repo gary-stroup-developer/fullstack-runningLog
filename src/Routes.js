@@ -17,7 +17,7 @@ export const Routes = () => {
     return (
         <Router>
             <Switch>
-                <PrivateRoute exact path= '/home' render={(routeProps) => <HomePage />} />
+                <PrivateRoute exact path= '/home' render={() => <HomePage />} />
                 <Route exact path = '/' render={(routeProps) =><LandingPage />} />
                 <Route exact path = '/login' render={(routeProps) =><LoginPage />} />
                 <Route exact path = '/signup' render={(routeProps) =><SignUpPage />} />
@@ -25,9 +25,9 @@ export const Routes = () => {
                 <Route exact path = '/verify-email/:verificationString' render={(routeProps) => <EmailVerificationLandingPage />} />
                 <Route exact path = '/forgot-password/' render={(routeProps) => <ForgotPasswordPage />} />
                 <Route exact path = '/reset-password/:verificationString' render={(routeProps) => <ResetPasswordLandingPage />} />
-                <Route exact path = '/logbook' render ={() => <Logbook />} />
-                <Route exact path = '/training-guide' render = {() => <TrainingGuide />} />
-                <Route exact path = '/vision-board' render = {() => <VisionBoard />} />
+                <PrivateRoute exact path = '/logbook' render ={() => <Logbook />} />
+                <PrivateRoute exact path = '/training-guide' render = {() => <TrainingGuide />} />
+                <PrivateRoute exact path = '/vision-board' render = {() => <VisionBoard />} />
             </Switch>
         </Router>
     )

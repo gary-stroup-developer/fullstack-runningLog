@@ -1,10 +1,18 @@
 import { useHistory } from 'react-router';
+import { useState, useEffect } from 'react';
 import { Navbar, Icon, NavItem,Dropdown, Divider } from "react-materialize";
 import circle from '../images/circle.png';
 
 
 export const NavbarComponent = (props) => {
     const history = useHistory();
+    const [name, setName] = useState('');
+    const [username, setUsername] = useState('');
+
+    useEffect(()=>{
+        setName(props.name);
+        setUsername(props.username);
+    },[setName, setUsername])
 
     const LogoutUser = () => {
     
@@ -35,9 +43,9 @@ export const NavbarComponent = (props) => {
                 }}
                 >
                 <NavItem href="/home">
-                    Home
+                   Home
                 </NavItem>
-                <NavItem href="/logbook">
+                <NavItem href="logbook">
                     LogBook
                 </NavItem>
                 <NavItem href='/training-guide'>
@@ -67,12 +75,12 @@ export const NavbarComponent = (props) => {
                     >
                     <div style={{display: "flex", width: "300px",padding:"10px"}}>
                     <p>Name</p>
-                    <p style={{marginLeft:"50px"}}>{props.name}</p>
+                    <p style={{marginLeft:"50px"}}>{name}</p>
                     </div>
                     <Divider />
                     <div style={{display: "flex", width: "300px",padding:"10px"}}>
                     <p>username</p>
-                    <p style={{marginLeft: "25px"}}>{props.username}</p>
+                    <p style={{marginLeft: "25px"}}>{username}</p>
                     </div>
                     <Divider />
                     <div style={{display: "flex", width: "300px",padding:"10px"}} onClick={LogoutUser}>

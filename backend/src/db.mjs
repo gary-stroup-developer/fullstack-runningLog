@@ -9,7 +9,7 @@
 //     await mongoose.connect('mongodb://localhost:27017/running-log', {useNewUrlParser: true, useUnifiedTopology: true});
 // }
 
-import MongoClient from 'mongodb/MongoClient';
+import MongoClient from 'mongodb';
 
 let client;
 
