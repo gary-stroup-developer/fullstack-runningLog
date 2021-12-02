@@ -3,28 +3,39 @@ import { useHistory } from "react-router";
 import axios from 'axios';
 import { EntryDatePicker } from "./EntryDatePicker"
 import { Button, Icon,TextInput,Textarea } from "react-materialize";
+import { useToken } from "../auth/useToken";
 
 export const AddEntryForm = (props) => {
     const [courseValue, setCourseValue] = useState('');
     const [distance, setDistance] = useState('');
     const [time, setTime] = useState('');
     const [notes, setNotes] = useState('');
+    const [errMessage, setErrMessage] = useState('');
+
+    const [token, setToken] = useToken();
+    const [title, setTitle] = useState('');
+
     const {id, userName} = props;
 
     const history= useHistory();
 
-    const addToDB = async (e)=>{
-        e.preventDefualt();
-        await axios.post(`/api/logbookentry/${id}`,{userName, courseValue, distance, time, notes});
-        setCourseValue('');
-        setDistance('');
-        setTime('')
-        setNotes('')
-        history.push('/logbook');
+    const addToDB = async ()=>{
+
+         try{
+            const {newToken} = await axios.post(`/api/logbookentry`,{userName, courseValue, distance, time, notes,id});
+            setToken(newToken);
+            setCourseValue('');
+            setDistance('');
+            setTime('')
+            setNotes('')
+            history.push('/logbook');
+         }catch(err){
+             setErrMessage('Entry submission was not successful. Failed to connect to the server');
+         }
     }
     return (
         <div>
-            <p style={{color:"grey",fontSize:"12px", marginLeft:"10px"}} >Date</p>
+        {errMessage != ''? <p>{errMessage}</p>: <h5>Add New Entry</h5>}
             <EntryDatePicker s={12} />
             
             <TextInput s={12} id="course" label="Course" placeholder="Name of the course you ran today" onChange={(e)=>setCourseValue(e.target.value)} />

@@ -1,9 +1,13 @@
 import { DatePicker } from "react-materialize";
-
+import { useState } from "react";
 export const EntryDatePicker = () => {
+    const [newDate, setNewDate] = useState('');
     return (
         <DatePicker
-        id="DatePicker-7"
+        value={newDate}
+        onChange={(val) => setNewDate(val.toDateString())}
+        id="entryTitle"
+        label="Entry Title"
         options={{
             autoClose: false,
             container: null,
@@ -87,7 +91,7 @@ export const EntryDatePicker = () => {
             showClearBtn: false,
             showDaysInNextAndPreviousMonths: false,
             showMonthAfterYear: false,
-            yearRange: 10
+            yearRange: 10,
         }}
         />
     )

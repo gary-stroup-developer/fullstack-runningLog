@@ -10,24 +10,34 @@ export const Logbook = () => {
     const [month, setMonth] = useState('');
     const [year, setYear] = useState('');
     const [displayAddEntry, setDisplay] = useState(false);
-    const [logbookEntries, setLogbookEntries] = useState([{title:'Get Started',entry:"Add a new entry"}])
+    const [logbookEntries, setLogbookEntries] = useState([{title:'',entry:''}])
     const user = useUser();
     const {id, firstName, userName} = user;
 
     useEffect(()=> {
-        const logbookEntries = axios.get(`/api/logbookentries/${id}`);
-        if(!logbookEntries){
+        const getEntry = async () => {
+        const response = await axios.get(`/api/logbookentries/${id}`);
+        if(response == null){
             setLogbookEntries([{title:'Get Started',entry:"Add a new entry"}])
         }
-        setLogbookEntries(logbookEntries);
-    },[logbookEntries]);
+        setLogbookEntries(response);
+    }
+    getEntry();
+    },[]);
 
     const addEntry = ()=>{
         setDisplay(true);
-
     }
 
+    const entry = logbookEntries.map((val,id) => {
+        return <div key={id}>
+        <h3>{val.title}</h3>
+        <p>{val.entry}<span style={{color:"blue"}}>...more</span></p>
+    </div>
+    })
+
     return (
+       
         <div style={{backgroundColor:"#fafafa"}}>
             <NavbarComponent name={firstName} username={userName} />
                 <div className="row">
@@ -48,12 +58,7 @@ export const Logbook = () => {
                     <div className="col s12 m9" style={{backgroundColor:"#fafafa",height:"100vh"}}>
                     {displayAddEntry ? <AddEntryForm id={id} userName={userName} /> :  
                         <div className="container">
-                            {data.map((d,id)=>(
-                                <div key={id}>
-                                    <h3>{d.title}</h3>
-                                    <p>{d.entry}<span style={{color:"blue"}}>...more</span></p>
-                                </div>
-                            ))}
+                        {entry}
                         </div>
                     }
                     </div>  

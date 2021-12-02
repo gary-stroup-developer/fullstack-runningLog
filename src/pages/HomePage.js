@@ -31,7 +31,9 @@ export const HomePage = (props) => {
     }, [])
     
     return (
+        
         <div>
+        {isVerified ?
             <div>
             <NavbarComponent  name={firstName} username={userName} /> 
             <div style={{padding:"25px"}}>
@@ -88,7 +90,10 @@ export const HomePage = (props) => {
                     </tbody>
                 </Table>
                 </div>
+            </div>:<div>
+            <p>Please verify your email to access the application</p>
             </div>
+        }
         </div>
     )
 }
