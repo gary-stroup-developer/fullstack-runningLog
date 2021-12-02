@@ -9,7 +9,7 @@ export const getLogbookEntries = {
 
         
         const db = getDbConnection('running-log');
-        const posts = await db.collection('posts').find({id},{"title":1,"notes":1});
+        const posts = await db.collection(`${id}`).find({id},{"title":1,"notes":1});
         if(!posts){
             return res.status(400).send('unable to get posts');
         }

@@ -10,7 +10,7 @@ export const addEntryRoute = {
         const {userName, courseValue, distance, time, title, notes,id} = req.body;
         const db = getDbConnection('running-log');
 
-        const result = await db.collection('posts').insertOne({
+        const result = await db.collection(`${id}`).insertOne({
             id,
             courseValue,
             distance,

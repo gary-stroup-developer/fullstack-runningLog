@@ -10,7 +10,7 @@ export const Logbook = () => {
     const [month, setMonth] = useState('');
     const [year, setYear] = useState('');
     const [displayAddEntry, setDisplay] = useState(false);
-    const [logbookEntries, setLogbookEntries] = useState([{title:'',notes:''}]);
+    const [logbookEntries, setLogbookEntries] = useState([{title:'Get Started',notes:'Add a new entry'}]);
     const user = useUser();
     const {id, firstName, userName} = user;
 
@@ -33,7 +33,7 @@ export const Logbook = () => {
     const entry = logbookEntries.map((val,id) => {
         return <div key={id}>
         <h3>{val.title}</h3>
-        <p>{val.notes}<span style={{color:"blue"}}>...more</span></p>
+        <p>{val.notes.substring(0,100)}<span style={{color:"blue"}}>...more</span></p>
     </div>
     })
 
