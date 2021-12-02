@@ -1,11 +1,17 @@
 import { DatePicker } from "react-materialize";
 import { useState } from "react";
-export const EntryDatePicker = () => {
+export const EntryDatePicker = (props) => {
     const [newDate, setNewDate] = useState('');
+
+    const updateDate = (val)=>{
+        val = val.toDateString();
+        setNewDate(val);
+        return props.changeDate(val);
+    }
     return (
         <DatePicker
         value={newDate}
-        onChange={(val) => setNewDate(val.toDateString())}
+        onChange={updateDate}
         id="entryTitle"
         label="Entry Title"
         options={{

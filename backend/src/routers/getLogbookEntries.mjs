@@ -5,18 +5,17 @@ export const getLogbookEntries = {
     path: '/api/logbookentries/:userId',
     method: 'get',
     handler: async (req,res) => {
-        const id = req.params.userId;
+        const {userId:id} = req.params;
+
+        
         const db = getDbConnection('running-log');
-        try{
-        const posts = await db.collection('posts').find({_id:ObjectID(id)});
-
-        if(posts == undefined){
-            return res.status(200).send(null);
+        const posts = await db.collection('posts').find({id},{"title":1,"notes":1});
+        if(!posts){
+            return res.status(400).send('unable to get posts');
         }
-
-        return res.status(200).send(posts);
-    }catch(err) {
-        return res.status(400).send([{title:'No posts available', entry:'enter your first post'}]);
-    }
+        const data =[];
+        await posts.forEach((val)=>data.push(val));
+        
+        return res.status(200).send(data);
     }
 }

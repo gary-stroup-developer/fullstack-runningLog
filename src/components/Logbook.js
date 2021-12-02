@@ -10,20 +10,21 @@ export const Logbook = () => {
     const [month, setMonth] = useState('');
     const [year, setYear] = useState('');
     const [displayAddEntry, setDisplay] = useState(false);
-    const [logbookEntries, setLogbookEntries] = useState([{title:'',entry:''}])
+    const [logbookEntries, setLogbookEntries] = useState([{title:'',notes:''}]);
     const user = useUser();
     const {id, firstName, userName} = user;
 
     useEffect(()=> {
         const getEntry = async () => {
         const response = await axios.get(`/api/logbookentries/${id}`);
-        if(response == null){
-            setLogbookEntries([{title:'Get Started',entry:"Add a new entry"}])
+        if(response.data == null){
+            setLogbookEntries([{title:'Get Started',notes:"Add a new entry"}])
         }
-        setLogbookEntries(response);
+        setLogbookEntries(response.data);
     }
     getEntry();
-    },[]);
+    
+    },[setLogbookEntries]);
 
     const addEntry = ()=>{
         setDisplay(true);
@@ -32,7 +33,7 @@ export const Logbook = () => {
     const entry = logbookEntries.map((val,id) => {
         return <div key={id}>
         <h3>{val.title}</h3>
-        <p>{val.entry}<span style={{color:"blue"}}>...more</span></p>
+        <p>{val.notes}<span style={{color:"blue"}}>...more</span></p>
     </div>
     })
 
