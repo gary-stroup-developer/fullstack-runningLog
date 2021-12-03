@@ -24,7 +24,7 @@ export const AddEntryForm = (props) => {
          try{
             const response = await axios.post('/api/logbookentry',{userName, courseValue, distance, time,title, notes,id});
             const {token: newToken} = response.data;
-            setToken(newToken);
+            setToken(token);
             setCourseValue('');
             setDistance('');
             setTime('')
