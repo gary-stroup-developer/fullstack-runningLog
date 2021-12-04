@@ -14,12 +14,13 @@ export const HomePage = (props) => {
     const [dailyAuthor, setDailyAuthor] = useState('');
 
     //user stats state variables
-    const [totalMiles, setTotalMiles] = useState('');
-    const [weeklyMiles, setWeeklyMiles] = useState('');
+    const [totalMiles, setTotalMiles] = useState(0);
+    const [weeklyMiles, setWeeklyMiles] = useState(0);
     const [dateValue, setDateValue] = useState('');
     const [raceNameValue, setRaceNameValue] = useState('');
     const [resultValue, setResultValue] = useState('');
     const [raceResults, setRaceResults] = useState([]);
+    const [showForm, setShowForm] = useState(false);
 
     //get user info
     const user = useUser();
@@ -43,23 +44,36 @@ export const HomePage = (props) => {
 
     //make request to get user mileage
     useEffect(()=>{
+
         const getData = async() => {
-        const response = await axios.get('/api/getMileage',{id});
-        const {totalMiles, weeklyMiles,raceResults} = response.data;
-        setTotalMiles(totalMiles);
-        setWeeklyMiles(weeklyMiles);
-        setRaceResults(raceResults);
+        const response = await axios.get(`/api/get-race-results/${userName}`);
+        const raceResultsData = response.data;
+        setRaceResults([...raceResultsData]);
         }
         getData();
-    },[])
+    },[]);
+
+    useEffect(()=>{
+
+        const getData = async() => {
+        const response = await axios.get(`/api/getMileage/${id}`);
+        const {totalMilesResult,weeklyMilesResult} = response.data;
+        setTotalMiles(totalMilesResult);
+        setWeeklyMiles(weeklyMilesResult);
+        }
+        getData();
+    },[setTotalMiles]);
 
     //add new row of data to the Table
     const addRow = async () => {
-        const response = await axios.post('/api/race-results',{id,dateValue, raceNameValue, resultValue});
+        //setRaceResults([...raceResults,{date:dateValue,name:raceNameValue,time:resultValue}]);
+        const response = await axios.post('/api/race-results',{userName,date:dateValue,name:raceNameValue,time:resultValue});
+        
         setShowForm(false);
         setDateValue('');
         setRaceNameValue('');
         setResultValue('');
+   
     }
 
     //structure the race results into a table format
@@ -78,9 +92,10 @@ export const HomePage = (props) => {
             <NavbarComponent  name={firstName} username={userName} /> 
             <div style={{padding:"25px"}}>
                 <h1>Welcome {firstName}</h1>
+                {picture ?
                 <div>
                     <img className="HomePage-img" src={picture} /> 
-                </div>
+                </div>:<div></div>}
                 <div style={{width: "80%",display:"flex",padding:"10px", justifyContent: "space-between"}}>
                     <p>Total Miles: {totalMiles}</p>
                     <p>Weekly Miles: {weeklyMiles}</p>
@@ -111,16 +126,16 @@ export const HomePage = (props) => {
                     </thead>
                     <tbody>
                         {raceEntries}
-                        {showForm? <tr>
-                            <td><TextInput id="raceResult-date" placeholder="Date of Race" value={dateValue} onChange={(e)=>setDateValue(e.target.value)} /></td>
-                            <td><TextInput id="raceResult-name" placeholder="Name of Race" value={raceNameValue} onChange={(e)=>setRaceNameValue(e.target.value)} /></td>
-                            <td><TextInput id="raceResult-time" placeholder="Result of Race" value={resultValue} onChange={(e)=>setResultValue(e.target.value)} /></td>
-                            <td><Button icon={<Icon>add</Icon>} onClick={addRow} ></Button></td>
-                        </tr>:
-                        <tr><td></td><td></td><td><Button icon={<Icon>add</Icon>} large onClick={()=> setShowForm(true)}></Button></td></tr>
-                        }
                     </tbody>
                 </Table>
+                {showForm? <div>
+                            <input type="text" id="raceResult-date" placeholder="Date of Race" value={dateValue} onChange={(e)=>setDateValue(e.target.value) }/>
+                            <input type="text" id="raceResult-name" placeholder="Name of Race" value={raceNameValue} onChange={(e)=>setRaceNameValue(e.target.value)} />
+                            <input type="text" id="raceResult-time" placeholder="Result of Race" value={resultValue} onChange={(e)=>setResultValue(e.target.value)} />
+                            <Button onClick={addRow} >Add Data</Button>
+                        </div>:
+                        <Button icon={<Icon>add</Icon>} small onClick={()=> setShowForm(true)}></Button>
+                        }
                 </div>
             </div>:<div>
             <p>Please verify your email to access the application</p>

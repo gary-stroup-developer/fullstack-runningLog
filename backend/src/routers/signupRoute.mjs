@@ -108,6 +108,7 @@ export const signUpRoute = {
             if(err) {
                 return res.status(500).send(err);
             }
+            result.tokens = result.tokens.push({token});
             res.status(200).json({token});
         }
         );

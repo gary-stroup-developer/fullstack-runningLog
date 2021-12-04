@@ -48,8 +48,8 @@ export const AddEntryForm = (props) => {
             
             <TextInput s={12} id="course" label="Course" placeholder="Name of the course you ran today" value={courseValue} onChange={(e)=>setCourseValue(e.target.value)} />
         
-            <TextInput s={12} id="distance" label="Distance(mi)" type="range" min="0" max="50" placeholder="How far did you run?" value={distance} onChange={(e)=>setDistance(e.target.value)} />
-            {distance}
+            <TextInput s={12} id="distance" label={`Distance(mi) ${distance}`} type="range" min="0" max="50" value={distance} onChange={(e)=>setDistance(e.target.value)} />
+            
             <TextInput s={12} id="time" label="Time" placeholder="How long did it take you to run" value={time} onChange={(e) => setTime(e.target.value)} />
     
             <Textarea s={12} data-length={200} id="training-notes" label="Training Notes" 

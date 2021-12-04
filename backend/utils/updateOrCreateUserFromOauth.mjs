@@ -12,8 +12,10 @@ export const updateOrCreateUserFromOauth = async ({oauthUserInfo}) => {
         family_name: lastName,
         picture,
     } = oauthUserInfo;
+    
     const db = getDbConnection('running-log');
     const exisitingUser = await db.collection('users').findOne({userName});
+   
 
     if(exisitingUser){
         const result = await db.collection('users').findOneAndUpdate(
