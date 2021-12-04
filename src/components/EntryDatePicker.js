@@ -4,7 +4,7 @@ export const EntryDatePicker = (props) => {
     const [newDate, setNewDate] = useState('');
 
     const updateDate = (val)=>{
-        const options = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' };
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
         val = val.toDateString('en-US',options);
         setNewDate(val);
         return props.changeDate(val);

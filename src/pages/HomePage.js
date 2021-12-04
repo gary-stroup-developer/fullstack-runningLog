@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { NavbarComponent } from '../components/Navbar';
-import { Table, Row, Col,Collection, CollectionItem} from 'react-materialize';
+import { Table, Row, Col,Collection, CollectionItem, Button, Icon, TextInput} from 'react-materialize';
 import { MotivationImage } from '../components/MotivationImage';
 import './HomePage.css';
 import { useUser } from '../auth/useUser';
@@ -9,12 +9,23 @@ import { useUser } from '../auth/useUser';
 
 
 export const HomePage = (props) => {
+    //quote state variables
     const [dailyQuote, setDailyQuote] = useState('');
     const [dailyAuthor, setDailyAuthor] = useState('');
 
+    //user stats state variables
+    const [totalMiles, setTotalMiles] = useState('');
+    const [weeklyMiles, setWeeklyMiles] = useState('');
+    const [dateValue, setDateValue] = useState('');
+    const [raceNameValue, setRaceNameValue] = useState('');
+    const [resultValue, setResultValue] = useState('');
+    const [raceResults, setRaceResults] = useState([]);
+
+    //get user info
     const user = useUser();
     const {userName, isVerified, id,firstName,picture} = user;
 
+    //make an API call to get the random quote
     useEffect(() => {
         
         const getQuote = async() => {
@@ -29,9 +40,38 @@ export const HomePage = (props) => {
         
         getQuote();
     }, [])
+
+    //make request to get user mileage
+    useEffect(()=>{
+        const getData = async() => {
+        const response = await axios.get('/api/getMileage',{id});
+        const {totalMiles, weeklyMiles,raceResults} = response.data;
+        setTotalMiles(totalMiles);
+        setWeeklyMiles(weeklyMiles);
+        setRaceResults(raceResults);
+        }
+        getData();
+    },[])
+
+    //add new row of data to the Table
+    const addRow = async () => {
+        const response = await axios.post('/api/race-results',{id,dateValue, raceNameValue, resultValue});
+        setShowForm(false);
+        setDateValue('');
+        setRaceNameValue('');
+        setResultValue('');
+    }
+
+    //structure the race results into a table format
+    const raceEntries = raceResults.map((result) => {
+        return <tr>
+            <td>{result.date}</td>
+            <td>{result.name}</td>
+            <td>{result.time}</td>
+        </tr>
+    })
     
     return (
-        
         <div>
         {isVerified ?
             <div>
@@ -42,8 +82,8 @@ export const HomePage = (props) => {
                     <img className="HomePage-img" src={picture} /> 
                 </div>
                 <div style={{width: "80%",display:"flex",padding:"10px", justifyContent: "space-between"}}>
-                    <p>Total Miles: 750</p>
-                    <p>Weekly Miles: 55</p>
+                    <p>Total Miles: {totalMiles}</p>
+                    <p>Weekly Miles: {weeklyMiles}</p>
                 </div>
                  
                 <Row>
@@ -58,8 +98,6 @@ export const HomePage = (props) => {
                         <p>{dailyAuthor}</p>
                         </CollectionItem>
                     </Collection>
-                  
-    
                 </Col>
                 </Row>
                 <h4>Race Results</h4>
@@ -72,21 +110,15 @@ export const HomePage = (props) => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>15-Mar-2021</td>
-                            <td>Oregon Hills Half Marathon</td>
-                            <td>1:45:12</td>
-                        </tr>
-                        <tr>
-                            <td>30-Jun-2021</td>
-                            <td>San Francisco Half Marathon</td>
-                            <td>1:53:54</td>
-                        </tr>
-                        <tr>
-                            <td>12-Nov-2021</td>
-                            <td>Mission Bay 10k</td>
-                            <td>38:12</td>
-                        </tr>
+                        {raceEntries}
+                        {showForm? <tr>
+                            <td><TextInput id="raceResult-date" placeholder="Date of Race" value={dateValue} onChange={(e)=>setDateValue(e.target.value)} /></td>
+                            <td><TextInput id="raceResult-name" placeholder="Name of Race" value={raceNameValue} onChange={(e)=>setRaceNameValue(e.target.value)} /></td>
+                            <td><TextInput id="raceResult-time" placeholder="Result of Race" value={resultValue} onChange={(e)=>setResultValue(e.target.value)} /></td>
+                            <td><Button icon={<Icon>add</Icon>} onClick={addRow} ></Button></td>
+                        </tr>:
+                        <tr><td></td><td></td><td><Button icon={<Icon>add</Icon>} large onClick={()=> setShowForm(true)}></Button></td></tr>
+                        }
                     </tbody>
                 </Table>
                 </div>
