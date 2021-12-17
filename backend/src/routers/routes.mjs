@@ -4,6 +4,7 @@ import {signUpRoute} from './signupRoute.mjs';
 import { emailVerificationRoute } from './emailVerificationRoute.mjs';
 import { forgotPasswordRoute } from './forgotPasswordRoute.mjs';
 import { getGoogleOauthUrlRoute } from './getGoogleOauthUrlRoute.mjs';
+import { downloadImagesRoute } from './downloadImagesRoute.mjs';
 import { getLogbookEntries } from './getLogbookEntries.mjs';
 import { getMileageRoute } from './getMileageRoute.mjs';
 import { getRaceResultsRoute } from './getRaceResultsRoute.mjs';
@@ -11,12 +12,14 @@ import { googleOauthCallbackRoute } from './googleOauthCallbackRoute.mjs';
 import { logInRoute } from './loginRoute.mjs';
 import { logoutRoute } from './logoutRoute.mjs';
 import { resetPasswordRoute } from './resetPasswordRoute.mjs';
+import { uploadImagesRoute } from './uploadImagesRoute.mjs';
 
 
 
 export const routes = [
     addEntryRoute,
     addRaceResultsRoute,
+    downloadImagesRoute,
     emailVerificationRoute,
     forgotPasswordRoute,
     getGoogleOauthUrlRoute,
@@ -28,4 +31,5 @@ export const routes = [
     logoutRoute,
     resetPasswordRoute,
     signUpRoute,
+    uploadImagesRoute,
 ]

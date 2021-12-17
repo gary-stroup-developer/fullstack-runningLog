@@ -7,11 +7,12 @@ import axios from 'axios';
 export const VisionBoard = () => {
 
     //create an array to hold the images retrieved from db
-    const savedImages = [];
-
+  
+    let visionBoardTitle = '';
     //initialize the state variables
     const [visionTitle, setVisionTitle] = useState('');
-    const [images, setImage] = useState({image1:'',image2: '',image3:'',image4:'',image5:''});
+    const [images, setImage] = useState({});
+    const [showForm, setShowForm] = useState(false);
 
     const [message, setMessage] = useState('');
 
@@ -21,28 +22,31 @@ export const VisionBoard = () => {
 
     const uploadImages = async () => {
         const response = await axios.post('/api/upload-images',{userName,id,visionTitle, images});
-        const message = response.data;
+        const {message} = response.data;
         setMessage(message);
         setImage({...images,image1:'',image2: '',image3:'',image4:'',image5:''});
-    
+        setVisionTitle('');
         setTimeout(()=> {
             setMessage('');
+            setShowForm(false);
         },3000);
     };
 
     useEffect(()=> {
         const getVision = async() => {
-        const response = await axios.get('/api/download-mages');
+        const response = await axios.get(`/api/download-images/${userName}`);
         const {title, image1, image2, image3, image4, image5} = response.data;
+  
+        setImage({...images,image1, image2, image3, image4, image5});
         setVisionTitle(title);
-        savedImages = [...savedImages,image1, image2, image3, image4, image5];
+
         }
 
         getVision();
     },[]);
 
     const setImages = (e) => {
-        const [name, value] = e.target;
+        const {name, value} = e.target;
         setImage({...images,[name]:value});
     }
     
@@ -50,10 +54,11 @@ export const VisionBoard = () => {
         <div>
             <NavbarComponent name={firstName} username={userName} />
             <h3>Vision Board</h3>
-            
-            {Object.keys(images).length === 0 ? 
-            <div>
             <p>Get Started with creating your vision of the future!</p>
+            <Button onClick={()=>setShowForm(false)}>Show Vision Board</Button>
+            <Button onClick={()=>setShowForm(true)}>Add or update photos</Button>
+            {showForm ? 
+            <div>
             <p>{message} </p>
             <div className="row">
                 <div clasName="col s-12 m-6 offset-3">
@@ -68,11 +73,13 @@ export const VisionBoard = () => {
             </div>
             </div> 
             : <div className="row">
-            {   savedImages.forEach((img) => {
-                <div className="col" style={{background: `url(${img}) left top no-repeat cover`}} />
-            })
-                
-            }
+            <h1>{visionTitle}</h1>
+                <div className="col s-4" style={{backgroundImage: `url(${images.image1})`,backgroundRepeat:"no-repeat", backgroundAttachment: "scroll", backgroundSize: "contain", backgroundPosition: "left top", width: "400px", height:"300px"}} />
+                <div className="col s-4" style={{backgroundImage: `url(${images.image2})`,backgroundRepeat:"no-repeat", backgroundAttachment: "scroll", backgroundSize: "contain", backgroundPosition: "left top", width: "400px", height:"300px"}} />
+                <div className="col s-4" style={{backgroundImage: `url(${images.image3})`,backgroundRepeat:"no-repeat", backgroundAttachment: "scroll", backgroundSize: "contain", backgroundPosition: "left top", width: "400px", height:"300px"}} />
+                <div className="col s-4" style={{backgroundImage: `url(${images.image4})`,backgroundRepeat:"no-repeat", backgroundAttachment: "scroll", backgroundSize: "contain", backgroundPosition: "left top", width: "400px", height:"300px"}} />
+                <div className="col s-4" style={{backgroundImage: `url(${images.image5})`,backgroundRepeat:"no-repeat", backgroundAttachment: "scroll", backgroundSize: "contain", backgroundPosition: "left top", width: "400px", height:"300px"}} /> 
+       
             </div>
             }
         </div>
