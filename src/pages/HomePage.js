@@ -51,7 +51,7 @@ export const HomePage = (props) => {
         setRaceResults([...raceResultsData]);
         }
         getData();
-    },[]);
+    },[setRaceResults,resultValue,showForm]);
 
     useEffect(()=>{
 
