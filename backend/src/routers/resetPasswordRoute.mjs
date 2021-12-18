@@ -19,7 +19,7 @@ export const resetPasswordRoute = {
         }});
 
         if(!user){
-            return res.status(400).send('unable to reset');
+            return res.status(400).json({"message":'unable to reset'});
         }
        
         return res.status(200).json({"message":"password was reset successfully. Login with your new password"}); 

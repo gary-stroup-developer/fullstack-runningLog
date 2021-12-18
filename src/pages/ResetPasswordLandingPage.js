@@ -18,7 +18,8 @@ export const ResetPasswordLandingPage = () => {
     const resetPassword = async () => {
         try {
             const response = await axios.put('/api/reset-password',{password: passwordValue,verificationString});
-            setResponse(response.data);
+            const {message} = response.data;
+            setResponse(message);
 
             setIsSuccess(true);
             setShowForm(false);
