@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { NavbarComponent } from "./Navbar";
 import { useUser } from "../auth/useUser";
-import { Button, TextInput } from "react-materialize";
+import { Button, Switch, TextInput } from "react-materialize";
 import axios from 'axios';
 
 export const VisionBoard = () => {
@@ -52,11 +52,20 @@ export const VisionBoard = () => {
     
     return (
         <div>
-            <NavbarComponent name={firstName} username={userName} />
+        <NavbarComponent name={firstName} username={userName} />
+        <div id="vision-board" style={{padding: "2rem 4rem"}}>
+            
             <h3>Vision Board</h3>
             <p>Get Started with creating your vision of the future!</p>
-            <Button onClick={()=>setShowForm(false)}>Show Vision Board</Button>
-            <Button onClick={()=>setShowForm(true)}>Add or update photos</Button>
+            <p>Use the toggle to show or hide the form needed to upload images to the board</p>
+            <Switch
+            id="vision-board-toggle"
+            offLabel="hide"
+            onChange={()=>setShowForm(!showForm)}
+            onLabel="show"
+            />
+            {/* <Button onClick={()=>setShowForm(false)}>Show Vision Board</Button>
+            <Button onClick={()=>setShowForm(true)}>Add or update photos</Button> */}
             {showForm ? 
             <div>
             <p>{message} </p>
@@ -82,6 +91,7 @@ export const VisionBoard = () => {
        
             </div>
             }
+        </div>
         </div>
     )
 }

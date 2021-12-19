@@ -5,6 +5,8 @@ import { WorkoutPlan } from "./WorkoutPlan"
 import { RunningGoals } from "./RunningGoals"
 import { useUser } from '../auth/useUser';
 
+import '../styles/trainingGuide.css';
+
 export const TrainingGuide = () => {
 
     const user = useUser();
@@ -13,7 +15,7 @@ export const TrainingGuide = () => {
         <div>
             <NavbarComponent name={firstName} username={userName} /> 
             <Row>
-                <Col s={12} m={3} style={{height:"100%", backgroundColor:"#fafafa",borderRight:"1px solid #D8D8D8"}}>
+                <Col id="training-guide-sideNav" s={12} m={3}>
                     <a href="#running-goals">Running Goals</a>
                     <a href="#workout-plan">Workout Plan</a>
                     <a href="#pace-chart">Pace Chart</a>
@@ -21,7 +23,7 @@ export const TrainingGuide = () => {
                     <a href="#injury-prevention">Injury Prevention</a>
                     <a href="#nutrition">Nutrition</a>
                 </Col>
-                <Col s={12} m={9} style={{height:"100%", backgroundColor:"#fafafa",borderRight:"1px solid #D8D8D8"}}>
+                <Col id="training-guide-main" s={12} m={9}>
                     <RunningGoals />
                     <WorkoutPlan />
                     <PaceChart />

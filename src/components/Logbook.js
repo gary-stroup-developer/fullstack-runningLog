@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import axios from 'axios';
 import { NavbarComponent } from "./Navbar"
 import { Divider, Button } from "react-materialize"
-import { data } from "../data/journalEntries"
+import { Link } from "react-router-dom";
 import { AddEntryForm } from "./AddEntryForm"
 import { useUser } from "../auth/useUser"
 
@@ -30,10 +30,10 @@ export const Logbook = () => {
         setDisplay(true);
     }
 
-    const entry = logbookEntries.map((val,id) => {
+    const entry = logbookEntries.map((val) => {
         return <div key={id}>
         <h3>{val.title}</h3>
-        <p>{val.notes.substring(0,100)}<span style={{color:"blue"}}>...more</span></p>
+        <p>{val.notes.substring(0,100)}<span style={{color:"blue"}}><Link to={`/logbook/article/${id}`}>...more</Link></span></p>
     </div>
     })
 
