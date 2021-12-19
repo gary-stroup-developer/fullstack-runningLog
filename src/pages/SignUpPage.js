@@ -37,7 +37,7 @@ export const SignUpPage = () => {
             <input type="email" placeholder="someone@gmail.com" value={emailValue} onChange={(e) => setEmailValue(e.target.value)} />
             <input type="password" placeholder="password" value={passwordValue} onChange={(e) => setPasswordValue(e.target.value)} />
             <input type="password" placeholder="confirm password" value={confirmPasswordValue} onChange={(e) => setConfirmPasswordValue(e.target.value)} />
-            <Button className="orange" disabled={!emailValue || !passwordValue || passwordValue !== confirmPasswordValue} onClick={signupClicked}>
+            <Button className="orange" disabled={!emailValue || !passwordValue || passwordValue !== confirmPasswordValue} type="submit" onClick={signupClicked}>
                 Sign Up
             </Button>
         </div>

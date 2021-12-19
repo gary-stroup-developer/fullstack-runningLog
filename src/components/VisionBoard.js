@@ -35,6 +35,12 @@ export const VisionBoard = () => {
     useEffect(()=> {
         const getVision = async() => {
         const response = await axios.get(`/api/download-images/${userName}`);
+        if(response == undefined) {
+            setMessage('No data available at this time. Please try adding some images');
+            setTimeout(()=> {
+                setMessage('')
+            },3000);
+        }
         const {title, image1, image2, image3, image4, image5} = response.data;
   
         setImage({...images,image1, image2, image3, image4, image5});

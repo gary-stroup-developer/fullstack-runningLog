@@ -6,6 +6,10 @@ export const uploadImagesRoute = {
     handler: async (req,res) => {
         const {userName,id,visionTitle, images} = req.body;
 
+        if(!userName || !visionTitle || !images) {
+            console.log('no data available yet');
+        }
+
         const db = getDbConnection('running-log');
         const user = await db.collection('users').findOneAndUpdate(
             {userName},
