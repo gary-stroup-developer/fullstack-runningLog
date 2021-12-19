@@ -1,4 +1,4 @@
-import ObjectID from 'mongodb';
+
 import { getDbConnection } from '../db.mjs';
 
 export const getLogbookEntries = {

@@ -6,6 +6,7 @@ import { forgotPasswordRoute } from './forgotPasswordRoute.mjs';
 import { getGoogleOauthUrlRoute } from './getGoogleOauthUrlRoute.mjs';
 import { downloadImagesRoute } from './downloadImagesRoute.mjs';
 import { getLogbookEntries } from './getLogbookEntries.mjs';
+import { getLogbookEntryRoute } from './getLogbookEntryRoute.mjs';
 import { getMileageRoute } from './getMileageRoute.mjs';
 import { getRaceResultsRoute } from './getRaceResultsRoute.mjs';
 import { googleOauthCallbackRoute } from './googleOauthCallbackRoute.mjs';
@@ -24,6 +25,7 @@ export const routes = [
     forgotPasswordRoute,
     getGoogleOauthUrlRoute,
     getLogbookEntries,
+    getLogbookEntryRoute,
     getMileageRoute,
     getRaceResultsRoute,
     googleOauthCallbackRoute,
