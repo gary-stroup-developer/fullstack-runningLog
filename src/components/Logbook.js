@@ -35,7 +35,12 @@ export const Logbook = () => {
         <h3>{val.title}</h3>
         <p>{val.notes.substring(0,100)}<span style={{color:"blue"}}><Link to={`/logbook/article/${id}`}>...more</Link></span></p>
     </div>
-    })
+    });
+
+    const filterEntries = async() => {
+        const response = axios.get(`/api/filtered-entries/${month}/${year}`);
+        const {data} = response.data;
+    }
 
     return (
        
@@ -51,7 +56,7 @@ export const Logbook = () => {
                             <input id="month" name="month" type="text" value={month} onChange={(e)=>setMonth(e.target.value)} />
                             <label htmlFor="year">Year</label>
                             <input id="year" name="year" type="text" value={year} onChange={(e)=>setYear(e.target.value)} />
-                            <Button small className="orange">View Entry</Button>
+                            <Button small className="orange" onClick={filterEntries}>View Entry</Button>
                         </div>
  
                     </div>

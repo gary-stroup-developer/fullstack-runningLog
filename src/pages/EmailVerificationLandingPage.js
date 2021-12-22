@@ -3,25 +3,26 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { EmailVerificationFail } from './EmailVerificationFail';
 import { EmailVerificationSuccess } from './EmailVerificationSuccess';
-import { useToken } from '../auth/useToken';
+
 import { Preloader, Col} from 'react-materialize';
 
 
 export const EmailVerificationLandingPage = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [isSuccess, setIsSuccess] = useState(false);
+    const [message, setMessage] = useState('');
 
     const {verificationString} = useParams();
-    const [, setToken] = useToken();
+
     
 
     useEffect(() => {
         const onLoading = async () => {
             try {
                 const response = await axios.put('/api/verify-email',{verificationString});
-                const {token} = response.data;
+                const {message} = response.data;
               
-                setToken(token);
+                setMessage(message);
                 setIsSuccess(true);
                 setIsLoading(false);
                 
@@ -31,11 +32,11 @@ export const EmailVerificationLandingPage = () => {
             }
         }
         onLoading();
-    },[setToken, verificationString])
+    },[message, verificationString])
     
     if(isLoading) return  <Col s={4}>
     <Preloader active color="blue" flashing />
     </Col>;
     if(!isSuccess) return <EmailVerificationFail verificationString={verificationString} />;
-    return <EmailVerificationSuccess />;
+    return <EmailVerificationSuccess message = {message} />;
 }

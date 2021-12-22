@@ -18,18 +18,18 @@ export const Routes = () => {
     return (
         <Router>
             <Switch>
-                <Route exact path = '/' render={() =><LandingPage />} />
-                <Route exact path = '/login' render={() =><LoginPage />} />
-                <Route exact path = '/signup' render={() =><SignUpPage />} />
-                <Route exact path = '/please-verify' render={() =><PleaseVerifyEmailPage />} />
-                <Route exact path = '/verify-email/:verificationString' render={() => <EmailVerificationLandingPage />} />
-                <Route exact path = '/forgot-password/' render={() => <ForgotPasswordPage />} />
-                <Route exact path = '/reset-password/:verificationString' render={() => <ResetPasswordLandingPage />} />
-                <PrivateRoute exact path= '/home' render={() => <HomePage />} />
-                <PrivateRoute exact path = '/logbook' render ={() => <Logbook />} />
-                <PrivateRoute exact path = '/logbook/article/:id' render = {() => <LogBookEntry />} />
-                <PrivateRoute exact path = '/training-guide' render = {() => <TrainingGuide />} />
-                <PrivateRoute exact path = '/vision-board' render = {() => <VisionBoard />} />
+                <Route exact path = '/' render={(routeProps) =><LandingPage />} />
+                <Route exact path = '/login' render={(routeProps) =><LoginPage />} />
+                <Route exact path = '/signup' render={(routeProps) =><SignUpPage />} />
+                <Route exact path = '/please-verify' render={(routeProps) =><PleaseVerifyEmailPage />} />
+                <Route exact path = '/verify-email/:verificationString' render={(routeProps) => <EmailVerificationLandingPage />} />
+                <Route exact path = '/forgot-password/' render={(routeProps) => <ForgotPasswordPage />} />
+                <Route exact path = '/reset-password/:verificationString' render={(routeProps) => <ResetPasswordLandingPage />} />
+                <PrivateRoute exact path= '/home' render={(routeProps) => <HomePage />} />
+                <PrivateRoute exact path = '/logbook' render ={(routeProps) => <Logbook />} />
+                <PrivateRoute exact path = '/logbook/article/:id' render = {(routeProps) => <LogBookEntry />} />
+                <PrivateRoute exact path = '/training-guide' render = {(routeProps) => <TrainingGuide />} />
+                <PrivateRoute exact path = '/vision-board' render = {(routeProps) => <VisionBoard />} />
             </Switch>
         </Router>
     )

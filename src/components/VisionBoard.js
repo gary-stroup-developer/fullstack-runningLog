@@ -5,13 +5,12 @@ import { Button, Switch, TextInput } from "react-materialize";
 import axios from 'axios';
 
 export const VisionBoard = () => {
-
-    //create an array to hold the images retrieved from db
   
-    let visionBoardTitle = '';
     //initialize the state variables
     const [visionTitle, setVisionTitle] = useState('');
+    const [visionboardTitle, setVisionboardTitle] = useState('');
     const [images, setImage] = useState({});
+    const [savedImages, setSavedImages] = useState({});
     const [showForm, setShowForm] = useState(false);
 
     const [message, setMessage] = useState('');
@@ -43,13 +42,13 @@ export const VisionBoard = () => {
         }
         const {title, image1, image2, image3, image4, image5} = response.data;
   
-        setImage({...images,image1, image2, image3, image4, image5});
-        setVisionTitle(title);
+        setSavedImages({...savedImages,image1, image2, image3, image4, image5});
+        setVisionboardTitle(title);
 
         }
 
         getVision();
-    },[]);
+    },[savedImages]);
 
     const setImages = (e) => {
         const {name, value} = e.target;
@@ -69,6 +68,7 @@ export const VisionBoard = () => {
             offLabel="hide"
             onChange={()=>setShowForm(!showForm)}
             onLabel="show"
+            checked={showForm}
             />
             {/* <Button onClick={()=>setShowForm(false)}>Show Vision Board</Button>
             <Button onClick={()=>setShowForm(true)}>Add or update photos</Button> */}
@@ -88,12 +88,12 @@ export const VisionBoard = () => {
             </div>
             </div> 
             : <div className="row">
-            <h1>{visionTitle}</h1>
-                <div className="col s-4" style={{backgroundImage: `url(${images.image1})`,backgroundRepeat:"no-repeat", backgroundAttachment: "scroll", backgroundSize: "contain", backgroundPosition: "left top", width: "400px", height:"300px"}} />
-                <div className="col s-4" style={{backgroundImage: `url(${images.image2})`,backgroundRepeat:"no-repeat", backgroundAttachment: "scroll", backgroundSize: "contain", backgroundPosition: "left top", width: "400px", height:"300px"}} />
-                <div className="col s-4" style={{backgroundImage: `url(${images.image3})`,backgroundRepeat:"no-repeat", backgroundAttachment: "scroll", backgroundSize: "contain", backgroundPosition: "left top", width: "400px", height:"300px"}} />
-                <div className="col s-4" style={{backgroundImage: `url(${images.image4})`,backgroundRepeat:"no-repeat", backgroundAttachment: "scroll", backgroundSize: "contain", backgroundPosition: "left top", width: "400px", height:"300px"}} />
-                <div className="col s-4" style={{backgroundImage: `url(${images.image5})`,backgroundRepeat:"no-repeat", backgroundAttachment: "scroll", backgroundSize: "contain", backgroundPosition: "left top", width: "400px", height:"300px"}} /> 
+            <h1>{visionboardTitle}</h1>
+                <div className="col s-4" style={{backgroundImage: `url(${savedImages.image1})`,backgroundRepeat:"no-repeat", backgroundAttachment: "scroll", backgroundSize: "contain", backgroundPosition: "left top", width: "400px", height:"300px"}} />
+                <div className="col s-4" style={{backgroundImage: `url(${savedImages.image2})`,backgroundRepeat:"no-repeat", backgroundAttachment: "scroll", backgroundSize: "contain", backgroundPosition: "left top", width: "400px", height:"300px"}} />
+                <div className="col s-4" style={{backgroundImage: `url(${savedImages.image3})`,backgroundRepeat:"no-repeat", backgroundAttachment: "scroll", backgroundSize: "contain", backgroundPosition: "left top", width: "400px", height:"300px"}} />
+                <div className="col s-4" style={{backgroundImage: `url(${savedImages.image4})`,backgroundRepeat:"no-repeat", backgroundAttachment: "scroll", backgroundSize: "contain", backgroundPosition: "left top", width: "400px", height:"300px"}} />
+                <div className="col s-4" style={{backgroundImage: `url(${savedImages.image5})`,backgroundRepeat:"no-repeat", backgroundAttachment: "scroll", backgroundSize: "contain", backgroundPosition: "left top", width: "400px", height:"300px"}} /> 
        
             </div>
             }

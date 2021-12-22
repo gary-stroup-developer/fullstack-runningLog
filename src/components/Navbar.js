@@ -27,13 +27,13 @@ export const NavbarComponent = (props) => {
             <Navbar
                 className="orange"
                 alignLinks="right"
-                brand={<a className="brand-logo" href="/home" style={{paddingLeft:"10px"}}><div style={{display:"flex",width:"400px",alignItems:"center"}}> <img style={{width:"10%"}} src={circle}/> Running Log</div></a>}
+                brand={<a className="brand-logo" href="/home" style={{paddingLeft:"10px"}}><div style={{display:"flex",width:"300px",alignItems:"center"}}> <img style={{width:"10%"}} src={circle}/> Running Log</div></a>}
                 id="mobile-nav"
                 menuIcon={<Icon>menu</Icon>}
                 options={{
                     draggable: true,
                     edge: 'left',
-                    inDuration: 250,
+                    inDuration: 350,
                     onCloseEnd: null,
                     onCloseStart: null,
                     onOpenEnd: null,

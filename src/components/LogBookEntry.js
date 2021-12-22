@@ -20,10 +20,11 @@ export const LogBookEntry = () => {
 
     return (
         <div style={{padding: "3rem"}}>
-            <h1>{entry.title}</h1>
-            <p>{entry.distance}</p>
-            <p>{entry.time}</p>
-            <p style={{width: "450px",height:"450px"}}>{entry.notes}</p>
+            <h3><span>Title: </span>{entry.title}</h3>
+            <p><span>Distance:</span> {entry.distance} mi</p>
+            <p><span>Time:</span> {entry.time}</p>
+            <p>Notes</p>
+            <p style={{width: "450px",height:"300px"}}>{entry.notes}</p>
             <Link to={`/logbook`}>Back</Link>
         </div>
     )

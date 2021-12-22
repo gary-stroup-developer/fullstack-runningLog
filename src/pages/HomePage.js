@@ -89,7 +89,7 @@ export const HomePage = (props) => {
         <div>
         {isVerified ?
             <div>
-            <NavbarComponent  name={firstName} username={userName} /> 
+            <NavbarComponent name={firstName} username={userName} /> 
             <div style={{padding:"25px"}}>
                 <h1>Welcome {firstName}</h1>
                 {picture ?
