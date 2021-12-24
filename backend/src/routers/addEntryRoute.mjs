@@ -10,13 +10,18 @@ export const addEntryRoute = {
         const {userName, courseValue, distance, time, title, notes,id} = req.body;
         const db = getDbConnection('running-log');
 
+        const year = new Date(title).getFullYear();
+        const month = title.split(' ')[1];
+
         const result = await db.collection(`${id}`).insertOne({
             id,
             courseValue,
             distance,
+            month,
             time,
             title,
-            notes
+            notes,
+            year
             });
          
             

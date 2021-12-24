@@ -10,6 +10,7 @@ export const Logbook = () => {
     const [month, setMonth] = useState('');
     const [year, setYear] = useState('');
     const [displayAddEntry, setDisplay] = useState(false);
+    const [showFilteredEntries, setShowFilteredEntries] = useState(false);
     const [logbookEntries, setLogbookEntries] = useState([{title:'Get Started',notes:'Add a new entry'}]);
     const user = useUser();
     const {id, firstName, userName} = user;
@@ -38,8 +39,15 @@ export const Logbook = () => {
     });
 
     const filterEntries = async() => {
-        const response = axios.get(`/api/filtered-entries/${month}/${year}`);
+        const response = await axios.get(`/api/filtered-entries/${id}/${month}/${year}`);
         const {data} = response.data;
+        const filteredEntries = data.map((val) => {
+            return <div key={val.id}>
+                <h3>{val.title}</h3>
+                <p>{val.notes.substring(0,100)}<span style={{color:"blue"}}><Link to={`/logbook/article/${val.id}`}>...more</Link></span></p>
+            </div>
+        });
+        setShowFilteredEntries(true);
     }
 
     return (
@@ -64,7 +72,7 @@ export const Logbook = () => {
                     <div className="col s12 m9" style={{backgroundColor:"#fafafa",height:"100vh"}}>
                     {displayAddEntry ? <AddEntryForm id={id} userName={userName} /> :  
                         <div className="container">
-                        {entry}
+                        {showFilteredEntries ? showFilteredEntries: entry}
                         </div>
                     }
                     </div>  
