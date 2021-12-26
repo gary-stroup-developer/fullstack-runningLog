@@ -5,11 +5,11 @@ import axios from "axios";
 
 export const LogBookEntry = () => {
     const [entry, setEntry] = useState({title:'',distance: '',time:'',notes: ''});
-    const {id} = useParams();
+    const {id,userTitle} = useParams();
 
     useEffect(() => {
         const getEntry = async() => {
-            const request = await axios.get(`/api/logbook/article/${id}`);
+            const request = await axios.get(`/api/logbook/article/${id}/${userTitle}`);
             const {data} = request.data;
             const {title, distance, time, notes} = data;
             setEntry({...entry,title,distance,time,notes});

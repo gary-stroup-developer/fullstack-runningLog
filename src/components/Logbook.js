@@ -12,8 +12,10 @@ export const Logbook = () => {
     const [displayAddEntry, setDisplay] = useState(false);
     const [showFilteredEntries, setShowFilteredEntries] = useState(false);
     const [logbookEntries, setLogbookEntries] = useState([{title:'Get Started',notes:'Add a new entry'}]);
+    const [filteredEntries, setFilteredEntries] = useState('');
     const user = useUser();
     const {id, firstName, userName} = user;
+    
 
     useEffect(()=> {
         const getEntry = async () => {
@@ -32,23 +34,26 @@ export const Logbook = () => {
     }
 
     const entry = logbookEntries.map((val) => {
+        let userTitle = val.title;
         return <div key={id}>
-        <h3>{val.title}</h3>
-        <p>{val.notes.substring(0,100)}<span style={{color:"blue"}}><Link to={`/logbook/article/${id}`}>...more</Link></span></p>
+        <h3>{userTitle}</h3>
+        <p>{val.notes.substring(0,100)}<span style={{color:"blue"}}><Link to={`/logbook/article/${id}/${userTitle}`}>...more</Link></span></p>
     </div>
     });
 
     const filterEntries = async() => {
-        const response = await axios.get(`/api/filtered-entries/${id}/${month}/${year}`);
+        const response = await axios.get(`/api/filtered-entries/${id}/${month}/${year}`)
         const {data} = response.data;
-        const filteredEntries = data.map((val) => {
+        const filteredEntriesData = data.map((val) => {
+            const {id,title:userTitle} = val;
             return <div key={val.id}>
-                <h3>{val.title}</h3>
-                <p>{val.notes.substring(0,100)}<span style={{color:"blue"}}><Link to={`/logbook/article/${val.id}`}>...more</Link></span></p>
+                <h3>{userTitle}</h3>
+                <p>{val.notes.substring(0,100)}<span style={{color:"blue"}}><Link to={`/logbook/article/${id}/${userTitle}`}>...more</Link></span></p>
             </div>
         });
+        setFilteredEntries(filteredEntriesData);
         setShowFilteredEntries(true);
-    }
+    };
 
     return (
        
@@ -72,7 +77,7 @@ export const Logbook = () => {
                     <div className="col s12 m9" style={{backgroundColor:"#fafafa",height:"100vh"}}>
                     {displayAddEntry ? <AddEntryForm id={id} userName={userName} /> :  
                         <div className="container">
-                        {showFilteredEntries ? showFilteredEntries: entry}
+                        {showFilteredEntries ? filteredEntries: entry}
                         </div>
                     }
                     </div>  

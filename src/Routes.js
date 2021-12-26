@@ -27,7 +27,7 @@ export const Routes = () => {
                 <Route exact path = '/reset-password/:verificationString' render={(routeProps) => <ResetPasswordLandingPage />} />
                 <PrivateRoute exact path= '/home' render={(routeProps) => <HomePage />} />
                 <PrivateRoute exact path = '/logbook' render ={(routeProps) => <Logbook />} />
-                <PrivateRoute exact path = '/logbook/article/:id' render = {(routeProps) => <LogBookEntry />} />
+                <PrivateRoute exact path = '/logbook/article/:id/:userTitle' render = {(routeProps) => <LogBookEntry />} />
                 <PrivateRoute exact path = '/training-guide' render = {(routeProps) => <TrainingGuide />} />
                 <PrivateRoute exact path = '/vision-board' render = {(routeProps) => <VisionBoard />} />
             </Switch>
